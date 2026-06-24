@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+const StatisticLine = (props) => (
+    <p>{props.text} {props.value}</p>
+)
+
 const Statistics = (props) =>{
   if(props.total===0)
     return(
@@ -11,11 +15,11 @@ const Statistics = (props) =>{
   return(
     <>
       <h1>Statistics</h1>
-      <p>Good {props.good} </p>
-      <p>Neutral {props.neutral} </p>
-      <p>Bad {props.bad} </p>
-      <p>all {props.total}</p>
-      <p>average {props.total === 0 ? 0 : props.average}</p>
+      <StatisticLine text='Good' value={props.good} />
+      <StatisticLine text='Neutral' value={props.neutral} />
+      <StatisticLine text='Bad' value={props.bad} />
+      <StatisticLine text='Total' value={props.total} />
+      <StatisticLine text='Avg' value= {props.total === 0 ? 0 : props.average} />
     </>
   )
 
