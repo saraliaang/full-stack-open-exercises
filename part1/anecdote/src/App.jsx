@@ -48,12 +48,11 @@ const App = () => {
       <button onClick={randomize}>NEXT anecdote</button>
       <p>Anecdote with the most vote</p>
       <p>{anecdotes[maxVoteIndex]}</p>
-      <p>has {votes[maxVoteIndex]} votes</p>
+      <p>has {votes[maxVoteIndex]} votes</p>ç
     </>
 
   )
 }
-
 
 
 export default App
