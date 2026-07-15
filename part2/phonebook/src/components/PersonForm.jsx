@@ -1,19 +1,19 @@
-export default function PersonForm(props) {
+export default function PersonForm({newName, nameChange, addPerson, newNumber, numberChange}) {
     return (
         <>
-            <form onSubmit={props.addPerson}>
+            <form onSubmit={addPerson}>
                 <div>
                     name:
                     <input
-                        value={props.newName}
-                        onChange={props.nameChange}
+                        value={newName}
+                        onChange={nameChange}
                     />
                 </div>
                 <div>
                     number:
                     <input
-                        value={props.newNumber}
-                        onChange={props.numberChange}
+                        value={newNumber}
+                        onChange={numberChange}
                     />
                 </div>
                 <div>
