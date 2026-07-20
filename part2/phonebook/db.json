@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Ladt",
-      "number": "111111111",
+      "number": "1231312",
       "id": "UO_X2ScfV_c"
     },
     {
@@ -21,14 +21,19 @@
       "id": "8p00aqppJRk"
     },
     {
-      "name": "jude12",
-      "number": "12121212",
-      "id": "QF9ZUDRwzBg"
-    },
-    {
       "name": "yooo",
       "number": "1368272818",
       "id": "eUzLPAkUbxg"
+    },
+    {
+      "name": "La la",
+      "number": "123123213",
+      "id": "NneHQXf3GmU"
+    },
+    {
+      "name": "La lalalalal",
+      "number": "12312312",
+      "id": "OSyn1mSX4Mc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

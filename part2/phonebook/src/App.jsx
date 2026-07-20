@@ -16,24 +16,32 @@ const App = () => {
   useEffect(() => {
     personService
       .getAll()
-      .then(response =>{
+      .then(response => {
         setPersons(response.data)
       })
-  },[])
+  }, [])
 
 
   const addPerson = (event) => {
     event.preventDefault()
-    const personExists = persons.some(person => person.name === newName)
-    if(personExists){
-      window.alert(newName + ' already exixt')
-    }else{
+    const personExisted = persons.find(person => person.name === newName)
+    if (personExisted) {
+      if (window.confirm(`${personExisted.name} already existed. Do you want to change the number?`)) {
+        personService
+          .update(personExisted.id, { name: newName, number: newNumber })
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id == returnedPerson.id ? returnedPerson : person))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
+    } else {
       personService
         .create({
-          name:newName,
-          number:newNumber,
+          name: newName,
+          number: newNumber,
         })
-        .then(returnedPerson=>{
+        .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
@@ -42,19 +50,21 @@ const App = () => {
   }
 
   const removePerson = (id) => {
-    personService
-      .remove(id)
-      .then(deletedPerson=>{
-        const updatedPersons = persons.filter(person => person.id !== id);
-        setPersons(updatedPersons)
-      })
+    if (window.confirm("Do you want to delte this person?")) {
+      personService
+        .remove(id)
+        .then(deletedPerson => {
+          const updatedPersons = persons.filter(person => person.id !== id);
+          setPersons(updatedPersons)
+        })
+    }
   }
 
 
-    const handleNameChange = (event) => {
+  const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
-    const handleNumberChange = (event) => {
+  const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
   }
 
@@ -63,18 +73,18 @@ const App = () => {
   }
 
   const nametoShow = newSearch
-  ? persons.filter(person => person.name.toLowerCase().includes(newSearch.toLowerCase()) )
-  : persons
+    ? persons.filter(person => person.name.toLowerCase().includes(newSearch.toLowerCase()))
+    : persons
 
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <Filter newSearch={newSearch} handleSearch = {handleSearch} />
+      <Filter newSearch={newSearch} handleSearch={handleSearch} />
       <h2>Add a new</h2>
-      <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} numberChange={handleNumberChange} nameChange={handleNameChange}/>
+      <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} numberChange={handleNumberChange} nameChange={handleNameChange} />
       <h2>Numbers</h2>
-      <Persons nameToShow = {nametoShow} removePerson={removePerson}/>
+      <Persons nameToShow={nametoShow} removePerson={removePerson} />
     </div>
   )
 }
