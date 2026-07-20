@@ -1,8 +1,7 @@
-export default function Persons(props){
-
-    return(
+export default function Persons({nameToShow,removePerson}) {
+    return (
         <>
-        {props.nameToShow.map(person => (<div key={person.id} ><h3>{person.name} {person.number}</h3></div>))}
+            {nameToShow.map(person => (<div key={person.id} ><h3>{person.name} {person.number}</h3><button onClick={()=>removePerson(person.id)}>Delete</button></div>))}
         </>
     )
 

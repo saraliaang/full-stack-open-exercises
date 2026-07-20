@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import personService from './services/phone'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
@@ -13,8 +14,8 @@ const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response =>{
         setPersons(response.data)
       })
@@ -27,19 +28,33 @@ const App = () => {
     if(personExists){
       window.alert(newName + ' already exixt')
     }else{
-      const newPersons = [...persons, {name:newName, number:newNumber}]
-      setPersons(newPersons)
-      setNewName('')
-      setNewNumber('')
+      personService
+        .create({
+          name:newName,
+          number:newNumber,
+        })
+        .then(returnedPerson=>{
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
+  const removePerson = (id) => {
+    personService
+      .remove(id)
+      .then(deletedPerson=>{
+        const updatedPersons = persons.filter(person => person.id !== id);
+        setPersons(updatedPersons)
+      })
+  }
+
+
     const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
     const handleNumberChange = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -59,7 +74,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} numberChange={handleNumberChange} nameChange={handleNameChange}/>
       <h2>Numbers</h2>
-      <Persons nameToShow = {nametoShow}/>
+      <Persons nameToShow = {nametoShow} removePerson={removePerson}/>
     </div>
   )
 }
