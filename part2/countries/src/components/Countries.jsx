@@ -13,6 +13,7 @@ export default function Countries({ countries }) {
         return <p>too much countries</p>
     }
     if (countries.length === 1) {
+        console.log(countries[0])
         return <CountryDetail country={countries[0]} />
     }
     if (countries.length == 0) {
@@ -21,7 +22,6 @@ export default function Countries({ countries }) {
     return (
         <>
             {countries.map(country => {
-                console.log(country)
                 return (
                     <li key={country.name.official}> {country.name.official} <button onClick={() => showDetail(country)}> Show</button ></li >)
             })}
